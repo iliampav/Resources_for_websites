@@ -1,6 +1,8 @@
-Dots-loader for websites first load, using greensock tech.
+This respository is a library of web utilities, if you'd like to add some utilities, just add a branch ;)
 
-- Loader
-- Dots
+Main repositories tech:
+
 - Greensock
-- HTML / CSS / JS
+- HTML5
+- CSS3
+- JS
