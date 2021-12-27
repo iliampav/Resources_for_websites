@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dots Loader</title>
+
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: black;
+    }
+
+    .loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .ball {
+        background-color: white;
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        border-radius: 50%;
+        margin: 10px;
+        position: relative;
+    }
+</style>
+<body>
+    <div class="loader">
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+
+        const ballsToSquare = document.querySelectorAll('.ball')
+        gsap.fromTo(ballsToSquare, {
+            borderRadius: 0,
+            scale: .2,
+            opacity: 0,
+        }, 
+        {
+            borderRadius: '+=50%',
+            scale: 1.2,
+            opacity: 1,
+            rotate: 180,
+            duration: .8,
+            repeatDelay: .3,
+            stagger: {each: 0.3, repeat: -1, yoyo: true }
+        })
+
+    </script>
+</body>
+
+</html>
