@@ -27,19 +27,43 @@
         background-color: red;
     }
 
+    .square {
+        width: 50px;
+        height: 50px;
+        background-color: green;
+    }
+
+    .color-blue {
+        background-color: blue;
+    }
+
+    .many-balls {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+    }
+
     .background-div {
         width: 80%;
         height: 80%;
         border: 2px solid gray;
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
     }
 
 </style>
 <body>
     <div class="background-div">
-        <div class="ball"></div>
+        <div class="many-balls">
+            <div class="ball"></div>
+            <div class="ball"></div>
+            <div class="ball"></div>
+            <div class="ball"></div>
+        </div>
+        <div class="square"></div>
     </div>
         
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
@@ -47,30 +71,29 @@
 
     <script>
 
-        const ball = document.querySelector('.ball')
+        const ball = document.querySelectorAll('.ball')
+        const square = document.querySelector('.square')
         const bg = document.querySelector('.background-div')
-
-        //tipo do movimento
-        // Draggable.create(ball, {
-        //     
-        // })
 
         Draggable.create(ball, {
             bounds: bg,
             edgeResistance: .8,
-            dragResistance: 0.7,
-            onDragStart: () => {
-                console.log('drag started')
-            },
-            onDrag: () => {
-                console.log('drag esta acontecendo')
-            },
-            onDragEnd: () => {
-                console.log('O drag terminou')
-            },
+            dragResistance: 0,
+            // onDragStart: () => {
+            //     console.log('drag started')
+            // },
+            // onDrag: () => {
+            //     console.log('drag esta acontecendo')
+            // },
+            onDragEnd: changeColor,
         })
 
-
+        function changeColor() {
+            if(this.hitTest(square)) {
+                gsap.to(this.target, {duration: .5, opacity:0, scale:0})
+                square.classList.add('color-blue')
+            }
+        }
     </script>
 
 </body>
