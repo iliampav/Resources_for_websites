@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search with options and text input</title>
+</head>
+
+<style>
+
+</style>
+
+<body>
+    <div class="order-select__status row">
+        {{-- show more than 10 options --}}
+        <select id="showNumber" class="order-dropdown__status otheicon showmoreoptions col-lg-4 mr-2">
+            <option value="10">
+                Mostrar 10
+            </option>
+            <option value="20">
+                Mostrar 20
+            </option>
+            <option value="30">
+                Mostrar 30
+            </option>
+        </select>
+        {{-- show filter --}}
+        <select id="witchState" class="order-dropdown__status showmoreoptions col-lg-6">
+            <option value="all" selected="selected">
+                Todos
+            </option>
+            <option value="active">
+                Ativo
+            </option>
+            <option value="inactive">
+                Inativo
+            </option>
+            <option value="closed">
+                Fechado
+            </option>
+        </select>
+        {{-- search from input --}}
+        <div  class="form-group position-relative col-lg-6">
+            <input id="searchInput" placeholder="Pesquisar" name="search__client" id="search__input" class="search__input" />
+            <label for="search__input" class="search__label">
+                <a><i class="fas fa-search"></i></a>
+            </label>
+        </div>
+    </div>
+    
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+if($("#unidades").length !== 0) {
+    //get all the cards
+    let completeArray = $(".card-order")
+
+    //clear array filtered
+    let filteredArray = []
+
+    //get the number of length to show
+    let howManyWillShow = 10
+
+    //dynamic state for filtering
+    let witchState = "all"
+
+    //dynamic state for filtering
+    let searchInputValue = ""
+
+    const stateFilter = () => {
+        // regex to get the tester object
+        var regexState = new RegExp('\\b' + witchState + '\\b');
+
+        // filter the complete array and send the data to filtered array
+        var arrayFilter = completeArray.hide().filter(function () {
+            return regexState.test($(this).data('status'))
+        });
+        filteredArray = arrayFilter
+
+        if(searchInputValue !== "") {
+            // pega o regex da pesquisa dp input
+            var regexSearch = new RegExp(searchInputValue);
+
+            //procura se existe o regex no nome
+            var arrayFilteredWithText = arrayFilter.hide().filter(function () {
+
+                return regexSearch.test($(this).find(".name-p").text().toLowerCase())
+            });
+
+            filteredArray = arrayFilteredWithText
+        }
+
+        //get the filtered array and slice it
+        finalChange = filteredArray.slice(0, howManyWillShow)
+
+        return finalChange
+    }
+
+    $("#witchState").change(() => {
+        //get the value of selected value
+        var selectedState = $("#witchState").find(":selected").val();
+
+        //save the value in a var
+        witchState = selectedState
+
+        //call the filter function
+        stateFilter().slideDown("slow")
+    });
+
+    $("#showNumber").change(() => {
+        //get the value of selected value
+        var howmanyToShow = $("#showNumber").find(":selected").val();
+
+        //save the value in a var
+        howManyWillShow = howmanyToShow
+
+        //call the filter function
+        stateFilter().slideDown("slow")
+    });
+
+    $("#searchInput").change((e) => {
+        e.preventDefault()
+
+        //get the input value and save
+        let searchvalue = $("#searchInput").val().toLowerCase()
+        searchInputValue = searchvalue
+
+        //call the filter function
+        stateFilter().slideDown("slow")
+    })
+
+    stateFilter().slideDown("slow")
+}
+</script>
+
+</html>
